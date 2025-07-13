@@ -1,0 +1,365 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Visita</title>
+  <link rel="stylesheet" href="css/estilo2.css" />
+
+  <style>
+    .selecao-visita {
+      display: flex;
+      flex-direction: column;
+      margin-top: 550px;
+      gap: 50px;
+      width: 100vw;
+      box-sizing: border-box;
+      padding: 0 16px;
+    }
+
+    .dias-container,
+    .horarios-container {
+      display: flex;
+      overflow-x: auto;
+      gap: 12px;
+      padding: 10px 0;
+      width: 100%;
+      box-sizing: border-box;
+    }
+
+    .dia-btn, .horario-btn {
+      min-width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background-color: #ccc;
+      border: 2px solid transparent;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      flex-shrink: 0;
+      transition: border 0.2s;
+      font-size: 12px;
+      user-select: none;
+    }
+
+    .dia-btn span {
+      font-size: 12px;
+      line-height: 14px;
+    }
+
+    .dia-btn.selected, .horario-btn.selected {
+      border-color: #007BFF;
+      background-color: #dceaff;
+    }
+
+    .dias-container::-webkit-scrollbar,
+    .horarios-container::-webkit-scrollbar {
+      height: 6px;
+    }
+
+    .dias-container::-webkit-scrollbar-thumb,
+    .horarios-container::-webkit-scrollbar-thumb {
+      background: #888;
+      border-radius: 10px;
+    }
+
+    .dias-container::-webkit-scrollbar-thumb:hover,
+    .horarios-container::-webkit-scrollbar-thumb:hover {
+      background: #555;
+    }
+
+    .modal-overlay {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100vw; height: 100vh;
+      background: rgba(0,0,0,0.5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      z-index: 9999;
+    }
+
+    .modal-box {
+      background: white;
+      padding: 20px 30px;
+      max-width: 400px;
+      border-radius: 8px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      text-align: center;
+      font-size: 16px;
+      line-height: 1.4;
+    }
+
+    .modal-box p {
+      margin-bottom: 20px;
+    }
+
+    .modal-box button {
+      padding: 10px 20px;
+      font-size: 16px;
+      cursor: pointer;
+      border: none;
+      border-radius: 5px;
+      background-color: #007BFF;
+      color: white;
+      transition: background-color 0.2s;
+    }
+
+    .modal-box button:hover {
+      background-color: #0056b3;
+    }
+
+    .confirm-container {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+      background-color: #fff;
+      padding: 15px 0;
+      box-shadow: 0 -2px 8px rgba(0,0,0,0.15);
+      display: flex;
+      justify-content: center;
+      z-index: 10000;
+    }
+
+    .confirm-button {
+      background-color: #007BFF;
+      border: none;
+      border-radius: 25px;
+      padding: 12px 40px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,123,255,0.4);
+    }
+
+    .confirm-button:hover {
+      background-color: #0056b3;
+    }
+
+    body {
+      padding-bottom: 80px; /* espaço para o botão fixo */
+      font-family: Arial, sans-serif;
+      margin: 0%;
+    }
+
+    .text-titulo {
+      font-size: 25px;
+      font-weight: 600;
+      margin-top: 20px;
+      padding-left: 0px;
+    }
+
+    .img-frente-casa {
+      width: 200px;
+      height: 150px;
+      
+      border-radius: 8px;
+      display: flex;
+
+      top: 165px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      object-fit: cover;
+    }
+
+    .text-desc {
+      max-width: 400px;
+      left: 230px;
+      font-size: 14px;
+      color: #333;
+      text-align: start;
+      line-height: 1.4;
+
+    }
+
+    .line {
+      height: 1px;
+      width: 90%;
+      background-color: #ddd;
+      margin: 0 auto 20px auto;
+    }
+
+    .line2 {
+      height: 1px;
+      width: 90%;
+      background-color: #ddd;
+      margin: 20px auto 0 auto;
+    }
+
+    .text-visita,
+    .text-visita1,
+    .text-visita3 {
+      font-size: 24px;
+      font-weight: 600;
+      margin-left: 12px;
+      margin-bottom: 8px;
+    }
+
+    .bnt-proprietario {
+      text-align: center;
+      margin-bottom: 16px;
+    }
+
+    .link-proprietario {
+      color: #007BFF;
+      font-weight: 600;
+      text-decoration: none;
+      font-size: 16px;
+      cursor: pointer;
+    }
+    .link-proprietario:hover {
+      text-decoration: underline;
+    }
+
+  </style>
+</head>
+<body>
+
+  <!-- Modal -->
+  <div class="modal-overlay" id="modalOverlay">
+    <div class="modal-box">
+      <p>
+        Atenção: as visitas a esse imóvel são marcadas apenas com compromisso.<br />
+        Uma taxa de R$ 119,90 será cobrada para marcar a visita, mas pode ficar tranquilo, pois ao final da visita o valor será reembolsado na hora.
+      </p>
+      <button id="modalOkBtn">OK</button>
+    </div>
+  </div>
+
+  <p class="text-titulo">Quando você quer visitar esse imóvel</p>
+
+  <img src="img/frente da casa.png" alt="Frente da casa" class="img-frente-casa" />
+
+  <p class="text-desc">
+    R$ 760 <sub>Aluguel</sub><br />
+    <small>R$ 0 cond + IPTU</small><br /><br />
+    Francisco Pozzani 199, Vila Joana, Ponte São João, Jundiaí<br />
+    <small>52m<sup>2</sup> • 1 quarto • 1 banheiro</small>
+  </p>
+
+  <div class="line"></div>
+
+  <p class="text-visita">Escolha com quem você deseja realizar a visita</p>
+
+  <div class="bnt-proprietario">
+    <a href="#" class="link-proprietario">Dono do imóvel</a>
+  </div>
+
+  <div class="selecao-visita">
+    <div>
+      <p class="text-visita1">Escolha o dia da visita</p>
+      <div class="dias-container">
+        <div class="dia-btn" data-dia="15"><span>Seg</span><span>15</span></div>
+        <div class="dia-btn" data-dia="16"><span>Ter</span><span>16</span></div>
+        <div class="dia-btn" data-dia="17"><span>Qua</span><span>17</span></div>
+        <div class="dia-btn" data-dia="18"><span>Qui</span><span>18</span></div>
+        <div class="dia-btn" data-dia="19"><span>Sex</span><span>19</span></div>
+        <div class="dia-btn" data-dia="20"><span>Sáb</span><span>20</span></div>
+        <div class="dia-btn" data-dia="21"><span>Dom</span><span>21</span></div>
+      </div>
+    </div>
+
+    <div>
+      <p class="text-visita3">Escolha o horário da visita</p>
+      <div class="horarios-container" id="horariosContainer">
+        <!-- Horários serão gerados via JavaScript -->
+      </div>
+    </div>
+  </div>
+
+  <div class="line2"></div>
+
+  <!-- Retângulo fixo com botão confirmar visita -->
+  <div class="confirm-container">
+    <button class="confirm-button" id="confirmarVisitaBtn">Confirmar visita</button>
+  </div>
+
+  <script>
+    // Modal controle
+    const modalOverlay = document.getElementById('modalOverlay');
+    const modalOkBtn = document.getElementById('modalOkBtn');
+
+    modalOkBtn.addEventListener('click', () => {
+      modalOverlay.style.display = 'none';
+    });
+
+    // Seleção de dia
+    const botoesDia = document.querySelectorAll('.dia-btn');
+    botoesDia.forEach(botao => {
+      botao.addEventListener('click', () => {
+        botoesDia.forEach(b => b.classList.remove('selected'));
+        botao.classList.add('selected');
+      });
+    });
+
+    // Geração dos horários
+    const horariosContainer = document.getElementById('horariosContainer');
+
+    function gerarHorarios() {
+      const inicio = 12;
+      const fim = 21;
+
+      for (let hora = inicio; hora <= fim; hora++) {
+        for (let minuto of [0, 30]) {
+          if (hora === fim && minuto > 0) break;
+          const h = hora.toString().padStart(2, '0');
+          const m = minuto.toString().padStart(2, '0');
+          const horario = `${h}:${m}`;
+
+          const btn = document.createElement('div');
+          btn.className = 'horario-btn';
+          btn.textContent = horario;
+
+          btn.addEventListener('click', () => {
+            document.querySelectorAll('.horario-btn').forEach(b => b.classList.remove('selected'));
+            btn.classList.add('selected');
+          });
+
+          horariosContainer.appendChild(btn);
+        }
+      }
+    }
+
+    gerarHorarios();
+
+    // Botão confirmar visita: valida seleção, salva e redireciona
+    const confirmarBtn = document.getElementById('confirmarVisitaBtn');
+    confirmarBtn.addEventListener('click', () => {
+      const diaSelecionado = document.querySelector('.dia-btn.selected');
+      const horarioSelecionado = document.querySelector('.horario-btn.selected');
+
+      if (!diaSelecionado && !horarioSelecionado) {
+        alert('Por favor, selecione o dia e o horário da visita.');
+        return;
+      }
+      if (!diaSelecionado) {
+        alert('Por favor, selecione o dia da visita.');
+        return;
+      }
+      if (!horarioSelecionado) {
+        alert('Por favor, selecione o horário da visita.');
+        return;
+      }
+
+      // Salvar dia e horário no localStorage
+      // Aqui adiciono o mês e ano para o dia ficar mais completo:
+      // Supondo mês e ano fixo (exemplo julho 2025), você pode ajustar para data real
+      const ano = new Date().getFullYear();
+      const mes = (new Date().getMonth() + 1).toString().padStart(2, '0'); // mês atual
+
+      const dataVisita = `${ano}-${mes}-${diaSelecionado.dataset.dia.padStart(2, '0')}`;
+      const horarioVisita = horarioSelecionado.textContent;
+
+      localStorage.setItem('diaVisita', dataVisita);
+      localStorage.setItem('horarioVisita', horarioVisita);
+
+      // Redireciona para resumo.html
+      window.location.href = 'resumo.html';
+    });
+  </script>
+
+</body>
+</html>

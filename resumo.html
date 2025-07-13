@@ -1,0 +1,292 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Resumo da Visita</title>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body, html {
+      font-family: Arial, sans-serif;
+      background: #f9f9f9;
+      padding: 20px;
+    }
+
+    .top-bar {
+      display: flex;
+      align-items: center;
+    }
+
+    .btn-voltar {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      border: none;
+      background-color: #007BFF;
+      color: white;
+      font-size: 24px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      box-shadow: 0 2px 6px rgba(0,123,255,0.6);
+      transition: background-color 0.3s;
+    }
+
+    .btn-voltar:hover {
+      background-color: #0056b3;
+    }
+
+    .info-casa {
+      display: flex;
+      gap: 20px;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .foto-casa {
+      width: 150px;
+      height: 120px;
+      border-radius: 8px;
+      object-fit: cover;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    .endereco {
+      font-size: 16px;
+      color: #333;
+    }
+
+    .detalhes-visita {
+      display: flex;
+      gap: 40px;
+      font-size: 16px;
+      color: #444;
+      font-weight: 600;
+      margin-top: 15px;
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      max-width: 400px;
+      margin-top: 20px;
+    }
+
+    label {
+      font-weight: 600;
+      margin-bottom: 4px;
+      color: #222;
+    }
+
+    input {
+      padding: 10px;
+      font-size: 14px;
+      border: 1.5px solid #ccc;
+      border-radius: 5px;
+    }
+
+    .chave-pix-container {
+      background: white;
+      border-radius: 8px;
+      padding: 15px 20px;
+      max-width: 400px;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-top: 20px;
+    }
+
+    .chave-pix {
+      font-family: monospace;
+      font-size: 14px;
+      margin-bottom: 10px;
+      word-break: break-word;
+      text-align: center;
+      color: #444;
+    }
+
+    .btn-copiar {
+      padding: 8px 25px;
+      border: none;
+      border-radius: 25px;
+      background-color: #007BFF;
+      color: white;
+      font-size: 15px;
+      cursor: pointer;
+      transition: background-color 0.3s;
+      box-shadow: 0 3px 8px rgba(0,123,255,0.5);
+    }
+
+    .btn-copiar:hover {
+      background-color: #0056b3;
+    }
+
+    .descricao {
+      max-width: 400px;
+      font-size: 14px;
+      color: #333;
+      line-height: 1.4;
+      margin-top: 15px;
+    }
+
+    .modal {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: white;
+      padding: 20px 25px;
+      border-radius: 10px;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.25);
+      max-width: 90%;
+      width: 400px;
+      z-index: 9999;
+      text-align: center;
+    }
+
+    .modal p {
+      font-size: 15px;
+      color: #222;
+      line-height: 1.4;
+    }
+
+    .modal.show {
+      display: block;
+    }
+
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.4);
+      z-index: 9998;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="top-bar">
+    <button class="btn-voltar" id="btnVoltar" title="Voltar">&#8592;</button>
+  </div>
+
+  <div class="info-casa">
+    <img src="img/frente da casa.png" alt="Frente da casa" class="foto-casa" />
+    <div class="endereco">
+      Rua Francisco Pozzani 199, Vila Joana, Ponte São João, Jundiaí
+    </div>
+  </div>
+
+  <div class="detalhes-visita">
+    <div><strong>Dia da visita:</strong> <span id="diaVisita">--/--</span></div>
+    <div><strong>Horário:</strong> <span id="horarioVisita">--:--</span></div>
+  </div>
+
+  <form id="formDados">
+    <label for="nome">Nome completo</label>
+    <input type="text" id="nome" name="nome" required />
+
+    <label for="telefone">Número de telefone</label>
+    <input type="tel" id="telefone" name="telefone" required placeholder="(xx) xxxxx-xxxx" />
+
+    <label for="email">E-mail</label>
+    <input type="email" id="email" name="email" required />
+
+    <label for="cpf">CPF</label>
+    <input type="text" id="cpf" name="cpf" required pattern="\d{11}" placeholder="Somente números" maxlength="11" />
+
+    <label for="nascimento">Data de nascimento</label>
+    <input type="date" id="nascimento" name="nascimento" required max="" />
+  </form>
+
+  <div class="chave-pix-container">
+    <div class="chave-pix" id="chavePix">00020126580014br.gov.bcb.pix013664813277-3cb2-40f9-855a-91b62e6805ab5204000053039865406119.005802BR5925GEOVANY PEREIRA DE OLIVEI6009SAO PAULO62210517Quintoandarvisita6304195D</div>
+    <button class="btn-copiar" id="btnCopiarPix">Copiar chave Pix</button>
+  </div>
+
+  <div class="descricao">
+    Após fazer o pagamento você será redirecionado automaticamente para a área de visita, onde poderá falar diretamente com o dono do imóvel.
+  </div>
+
+  <input type="text" id="inputCopiaPix" style="position:absolute; left:-9999px; top:-9999px;" />
+
+  <!-- Modal de confirmação -->
+  <div class="overlay" id="overlay"></div>
+  <div class="modal" id="modalPix">
+    <p>
+      Após o pagamento você será direcionado ao contato direto com o dono do imóvel,<br />
+      onde poderá tirar dúvidas ou cancelar a visita.<br /><br />
+      <strong>Lembrando que o valor pago será reembolsado após a visita.</strong>
+    </p>
+  </div>
+
+  <script>
+    document.getElementById('btnVoltar').addEventListener('click', () => {
+      window.history.back();
+    });
+
+    document.getElementById('diaVisita').textContent = localStorage.getItem('diaVisita') || '--/--';
+    document.getElementById('horarioVisita').textContent = localStorage.getItem('horarioVisita') || '--:--';
+    document.getElementById('nascimento').max = new Date().toISOString().split('T')[0];
+
+    const modal = document.getElementById('modalPix');
+    const overlay = document.getElementById('overlay');
+    const btnCopiarPix = document.getElementById('btnCopiarPix');
+    const chave = document.getElementById('chavePix').textContent.trim();
+    const inputFallback = document.getElementById('inputCopiaPix');
+
+    btnCopiarPix.addEventListener('click', () => {
+      if (navigator.clipboard && window.isSecureContext) {
+        navigator.clipboard.writeText(chave).then(() => {
+          mostrarModal();
+        }).catch(() => {
+          fallbackCopy();
+        });
+      } else {
+        fallbackCopy();
+      }
+    });
+
+    function fallbackCopy() {
+      inputFallback.value = chave;
+      inputFallback.select();
+      inputFallback.setSelectionRange(0, 99999);
+      if (document.execCommand('copy')) {
+        mostrarModal();
+      } else {
+        alert('Erro ao copiar a chave Pix.');
+      }
+    }
+
+    function mostrarModal() {
+      btnCopiarPix.textContent = 'Copiado!';
+      modal.classList.add('show');
+      overlay.classList.add('show');
+
+      setTimeout(() => {
+        btnCopiarPix.textContent = 'Copiar chave Pix';
+      }, 2000);
+
+      overlay.addEventListener('click', () => {
+        modal.classList.remove('show');
+        overlay.classList.remove('show');
+      });
+    }
+  </script>
+</body>
+</html>

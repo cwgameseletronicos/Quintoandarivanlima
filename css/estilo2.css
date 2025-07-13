@@ -1,0 +1,131 @@
+
+    body{
+        display: flex;
+        margin: 0%;
+        padding: 0%;
+    }
+
+    .bnt-seta{
+        display: flex;
+        position: absolute;
+
+        height: 50px;
+        width: 50px;
+        background: #DCDCE1;
+
+        left: 15px;
+        top: 20px;
+        border-radius: 50%;
+    }
+
+    .img-frente-casa{
+        display: flex;
+        position: absolute;
+
+        left: 15px;
+
+        width: 100px;
+        height: 130px;
+        top: 170px;
+        border-radius: 20px;
+    }
+
+    .text-desc{
+        display: inline;
+        position: absolute;
+
+        top: 155px;
+        left: 180px;
+    }
+
+    .text-titulo{
+        display: flex;
+        position: absolute;
+
+        top: 45px;
+        left: 15px;
+        width: 100%;
+        font-size: 30px;
+        font-weight: 600;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .line{
+        display: flex;
+        position: absolute;
+
+        height: 1px;
+        width: 90%;
+        left: 5%;
+        background: #DCDCE1;
+        top: 350px;
+    }
+
+    .line2{
+        display: flex;
+        position: absolute;
+
+        height: 1px;
+        width: 90%;
+        left: 5%;
+        background: #DCDCE1;
+        top: 800px;
+    }
+
+    .text-visita{
+        display: flex;
+        position: absolute;
+
+        top: 350px;
+        left: 15px;
+        font-size: 25px;
+        font-weight: 600;
+
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .text-visita1{
+        display: flex;
+        position: absolute;
+
+        top: 490px;
+        left: 15px;
+        font-size: 25px;
+        font-weight: 600;
+
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+    .text-visita3{
+        display: flex;
+        position: absolute;
+
+        top: 620px;
+        left: 15px;
+        font-size: 25px;
+        font-weight: 600;
+
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+
+    .bnt-proprietario{
+        display: flex;
+        position: absolute;
+
+        height: 40px;
+        width: 120px;
+
+        background: #ccc;
+        top: 455px;
+        left: 10px;
+        border-radius: 20px;
+        align-items: center;
+        justify-content: center;
+        border: 1px solid #007BFF;
+        
+    }
+
+    .link-proprietario{
+        text-decoration: none;
+        color: #007BFF;
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Casa para alugar</title>
+    <link rel="stylesheet" href="css/estilo1.css">
+</head>
+<body>
+
+   <div id="modal-aviso" class="modal">
+  <div class="modal-content">
+    <p><strong>Atenção!</strong><br><br>
+      Este imóvel é oferecido diretamente pelo locador e <strong>não exige caução, depósitos antecipados ou fiador</strong>.<br><br>
+      A locação é feita <strong>sem a intermediação de imobiliária</strong>, proporcionando uma experiência mais direta, segura e descomplicada.<br><br>
+      Aproveite sua visita e sinta-se à vontade para agendar com compromisso.
+    </p>
+    <button id="fechar-modal">Entendi</button>
+  </div>
+</div>
+
+
+    
+    <div class="slider-container">
+    <div class="slider" id="slider">
+      <img src="img/frente da casa.png" alt="Foto 1">
+      <img src="img/ic-cozinha.jpeg" alt="Foto 2">
+      <img src="img/ic-quarto.jpeg" alt="Foto 3">
+      <img src="img/ic-quarto2.jpeg" alt="Foto 4">
+      <img src="img/ic-banheiro.jpeg" alt="Foto 5">
+    
+      <img src="img/ic-lavanderia.jpeg" alt="Foto 6">
+    </div>
+  </div>
+
+  
+
+    <div class="container_fotos">
+        <div class="bnt-voltar">
+            <img src="img/ic-seta.png" alt="" class="img-ic">
+        </div>
+
+        <div class="bnt-coracao">
+            <img src="img/ic-coracao.png" alt="" class="img-ic">
+        </div>
+
+        <div class="bnt-compartilhar">
+            <img src="img/ic-compartilhar.png" alt="" class="img-ic">
+        </div>
+
+        <div class="bnt-fotos">
+            <p class="text-foto">Fotos</p>
+            <img src="img/ic-galeria.png" alt="" class="img-ic1">
+        </div>
+        <div class="bnt-videos">
+            <p class="text-foto">Videos</p>
+            <img src="img/ic-camera.png" alt="" class="img-ic1">
+        </div>
+        <div class="bnt-mapa">
+            <p class="text-foto">Mapa</p>
+            <img src="img/ic-mapa.png" alt="" class="img-ic1">
+        </div>
+        <div class="bnt-rua">
+            <p class="text-foto">Rua</p>
+        </div>
+
+    </div>
+
+    <p class="text-valor-total"> <b>R$ 760 </b>  &nbsp;<small> <sub>total</sub></small> </p>
+    <p class="text-valor-aluguel"> <small>R$ 700 Aluguel</small></p>
+
+    <div class="line"></div>
+
+    <p class="text-casa"><small>casa</small></p>
+    <p class="text-endereco"> Rua Francisco pozzani 199, vila Joana ponte Sao Joao, <br> Jundiai, Sao Paulo</p>
+    <p class="text-inf-casa"><small>52m <sup>2</sup>&nbsp;&nbsp;&nbsp;.&nbsp;&nbsp; 1 quarto&nbsp;&nbsp;&nbsp; 1 banheiro&nbsp;&nbsp;&nbsp;2 vagas</small> </p>
+
+    <div class="view-agendar-visita">
+        <a href="visita.html" class="link-centro">Agendar Visita</a>
+    </div>
+    <div class="view-fazer-proposta">
+        <a href="#" class="link-centro1">Fazer proposta</a>
+
+    </div>
+
+    
+
+    <p class="text-valores">Valores</p> 
+    <p class="text-taxa-de-visita">Visita</p>     <p class="text-valor-visita">R$: 63,00</p>
+    <p class="text-aluguel">Aluguel</p>    <p class="text-valor-aluguel1">R$: 00</p>
+    <p class="text-condominio">Condominio</p>   <p class="text-valor-condominio">R$: 00</p>
+    <p class="text-iptu">IPTU</p>  <p class="text-valor-iptu">R$: 00</p>
+    <p class="seguro-incendio">seguro incendio</p> <p class="text-valor-incendio">R$: 00</p>
+    <p class="taxa-de-servico">taxa de serviço</p> <p class="text-valor-servico">R$: 56,00</p>
+
+   
+ <div class="line1"></div>
+    <p class="text-total">Total:</p>  <p class="text-total-valor">R$: 119,90</p>
+
+    <div class="container-avaliacao">
+
+        <p> &nbsp;  Aluguel seguro com selo de verificaçao.</p> 
+        <p> &nbsp;  visita com compromisso Quinto Andar.</p>
+        
+        
+    </div>
+
+    <p class="text-resumo">Resumo</p>
+
+    <p class="text-metros">52m <sup>2</sup></p>  <img src="img/ic-regua.png" alt="" class="img-regua">
+    <p class="text-quarto">1 Quarto</p>          <img src="img/ic-cama.png" alt="" class="img-cama">
+    <p class="text-banheiro">1 Banheiro</p>      <img src="img/ic-chuveiro.png" alt="" class="img-chuveiro">  
+    <p class="text-vagas">2 vagas</p>           <img src="img/ic-carro.png" alt="" class="img-vagas">
+    <p class="text-pets">aceita pets</p>       <img src="img/ic-pata.png" alt="" class="img-pata">
+    <p class="text-criancas">aceita criancas</p>    <img src="img/ic-crianca.png" alt="" class="img-crianca">
+
+    <div class="line2"></div>
+
+    <script>
+  const modal = document.getElementById('modal-aviso');
+  const fecharBtn = document.getElementById('fechar-modal');
+
+  fecharBtn.addEventListener('click', () => {
+    modal.style.display = 'none';
+  });
+</script>
+
+
+    
+
+    
+
+<script src="script.js"></script>    
+</body>
+</html>
